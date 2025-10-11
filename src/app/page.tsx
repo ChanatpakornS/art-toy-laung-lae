@@ -6,12 +6,10 @@ export default function Home() {
       {/* Hero Section */}
       <article className='flex flex-col items-center justify-center px-6 py-20 text-center'>
         <h1 className='text-4xl md:text-6xl font-bold bg-background text-primary mb-6 max-w-4xl'>
-          Mocker
+          Art Toy Pre-Order System
         </h1>
         <p className='text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation.
+          Streamline your art toy pre-orders with our intuitive and efficient
         </p>
         <div className='flex flex-col sm:flex-row gap-4'>
           <button className='bg-background text-primary px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors'>

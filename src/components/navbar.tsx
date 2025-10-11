@@ -13,12 +13,6 @@ export function Navbar() {
           Home
         </Link>
         <Link
-          href='/services'
-          className='text-foreground hover:text-muted-foreground transition-colors'
-        >
-          Services
-        </Link>
-        <Link
           href='/about'
           className='text-foreground hover:text-muted-foreground transition-colors'
           prefetch
@@ -26,11 +20,11 @@ export function Navbar() {
           About
         </Link>
         <Link
-          href='/contact'
+          href='/login'
           className='text-foreground hover:text-muted-foreground transition-colors'
           prefetch
         >
-          Contact
+          Login
         </Link>
         <ThemeToggle />
       </div>
