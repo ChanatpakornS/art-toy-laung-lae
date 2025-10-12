@@ -72,8 +72,9 @@ export default function LoginPage() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    placeholder='Login button not working on mobile'
-                    autoComplete='off'
+                    placeholder='Enter your Username'
+                    autoComplete='on'
+                    required
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
@@ -94,8 +95,9 @@ export default function LoginPage() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    placeholder='Login button not working on mobile'
-                    autoComplete='off'
+                    placeholder='Enter your Password'
+                    autoComplete='on'
+                    required
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
