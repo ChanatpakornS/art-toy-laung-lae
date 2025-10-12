@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Boilerplate App',
+  title: 'Art Toy Pre-Order',
   description:
-    'This is your description for your app, like this page created from Create Next App',
+    'Streamline your art toy pre-orders with our intuitive and efficient system',
 };
 
 export default function RootLayout({

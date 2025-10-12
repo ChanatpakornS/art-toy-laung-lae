@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export function Footer() {
@@ -9,15 +8,8 @@ export function Footer() {
         <div className='md:flex md:justify-between'>
           <div className='mb-6 md:mb-0'>
             <Link href='https://flowbite.com/' className='flex items-center'>
-              <Image
-                src='https://flowbite.com/docs/images/logo.svg'
-                className='h-8 me-3'
-                width={48}
-                height={48}
-                alt='FlowBite Logo'
-              />
               <span className='self-center text-2xl font-semibold text-foreground'>
-                Flowbite
+                ArtToyPreOrder
               </span>
             </Link>
           </div>
@@ -90,36 +82,15 @@ export function Footer() {
         <hr className='my-6 border-border sm:mx-auto lg:my-8' />
         <div className='sm:flex sm:items-center sm:justify-between'>
           <span className='text-sm text-muted-foreground sm:text-center'>
-            © 2023{' '}
+            © 2025{' '}
             <Link href='https://flowbite.com/' className='hover:underline'>
-              Flowbite™
+              ArtToyPreOrder™
             </Link>
             . All Rights Reserved.
           </span>
           <div className='flex mt-4 sm:justify-center sm:mt-0'>
             <Link
-              href='#'
-              className='text-muted-foreground hover:text-foreground'
-            >
-              <Icon icon='simple-icons:facebook' className='w-4 h-4' />
-              <span className='sr-only'>Facebook page</span>
-            </Link>
-            <Link
-              href='#'
-              className='text-muted-foreground hover:text-foreground ms-5'
-            >
-              <Icon icon='simple-icons:discord' className='w-4 h-4' />
-              <span className='sr-only'>Discord community</span>
-            </Link>
-            <Link
-              href='#'
-              className='text-muted-foreground hover:text-foreground ms-5'
-            >
-              <Icon icon='simple-icons:x' className='w-4 h-4' />
-              <span className='sr-only'>X page</span>
-            </Link>
-            <Link
-              href='#'
+              href='https://github.com/ChanatpakornS/art-toy-laung-lae'
               className='text-muted-foreground hover:text-foreground ms-5'
             >
               <Icon icon='simple-icons:github' className='w-4 h-4' />

@@ -25,34 +25,33 @@ export default function Home() {
       <section className='px-6 py-20'>
         <div className='max-w-6xl mx-auto'>
           <h2 className='text-3xl md:text-4xl font-bold text-foreground text-center mb-16'>
-            Mocker features
+            Art toy pre-order features
           </h2>
           <div className='grid md:grid-cols-3 gap-8'>
             <div className='bg-card/80 backdrop-blur-sm rounded-lg p-6 text-center border border-border'>
               <h3 className='text-xl font-semibold text-card-foreground mb-4'>
-                Lorem ipsum
+                Authentication
               </h3>
               <p className='text-muted-foreground'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore.
+                Secure user authentication for a seamless pre-order experience
+                with NextAuth
               </p>
             </div>
             <div className='bg-card/80 backdrop-blur-sm rounded-lg p-6 text-center border border-border'>
               <h3 className='text-xl font-semibold text-card-foreground mb-4'>
-                Dolor sit amet
+                Art toys API
               </h3>
               <p className='text-muted-foreground'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore.
+                CRUD Operations related to art toys, including details like
               </p>
             </div>
             <div className='bg-card/80 backdrop-blur-sm rounded-lg p-6 text-center border border-border'>
               <h3 className='text-xl font-semibold text-card-foreground mb-4'>
-                Consectetur
+                Pre-Order API
               </h3>
               <p className='text-muted-foreground'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore.
+                CRUD Operations related to orders, including references and
+                amount
               </p>
             </div>
           </div>
