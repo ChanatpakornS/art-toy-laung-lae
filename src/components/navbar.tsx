@@ -13,6 +13,12 @@ export function Navbar() {
           Home
         </Link>
         <Link
+          href='/arttoys'
+          className='text-foreground hover:text-muted-foreground transition-colors'
+        >
+          Arttoys
+        </Link>
+        <Link
           href='/about'
           className='text-foreground hover:text-muted-foreground transition-colors'
           prefetch

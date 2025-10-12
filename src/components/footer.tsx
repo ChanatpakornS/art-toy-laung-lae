@@ -18,13 +18,10 @@ export function Footer() {
               <h2 className='mb-6 text-sm font-semibold text-foreground uppercase'>
                 Resources
               </h2>
-              <ul className='text-muted-foreground font-medium'>
-                <li className='mb-4'>
-                  <Link
-                    href='https://flowbite.com/'
-                    className='hover:underline'
-                  >
-                    Mocker
+              <ul className='text-muted-foreground font-medium space-y-4'>
+                <li>
+                  <Link href='https://nextjs.org/' className='hover:underline'>
+                    NextJS
                   </Link>
                 </li>
                 <li>
@@ -33,6 +30,14 @@ export function Footer() {
                     className='hover:underline'
                   >
                     Tailwind CSS
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href='https://ui.shadcn.com/'
+                    className='hover:underline'
+                  >
+                    ShadCN UI
                   </Link>
                 </li>
               </ul>
@@ -44,35 +49,22 @@ export function Footer() {
               <ul className='text-muted-foreground font-medium'>
                 <li className='mb-4'>
                   <Link
-                    href='https://github.com/themesberg/flowbite'
+                    href='https://github.com/ChanatpakornS/art-toy-laung-lae'
                     className='hover:underline '
                   >
                     Github
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href='https://discord.gg/4eeurUVvTy'
-                    className='hover:underline'
-                  >
-                    Discord
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h2 className='mb-6 text-sm font-semibold text-foreground uppercase'>
-                Legal
+                Information
               </h2>
               <ul className='text-muted-foreground font-medium'>
                 <li className='mb-4'>
-                  <Link href='#' className='hover:underline'>
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href='#' className='hover:underline'>
-                    Terms &amp; Conditions
+                  <Link href='/about' className='hover:underline'>
+                    About us
                   </Link>
                 </li>
               </ul>

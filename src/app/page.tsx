@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className='min-h-screen'>
@@ -12,9 +14,12 @@ export default function Home() {
           Streamline your art toy pre-orders with our intuitive and efficient
         </p>
         <div className='flex flex-col sm:flex-row gap-4'>
-          <button className='bg-background text-primary px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors'>
+          <Link
+            href='/arttoys'
+            className='bg-background text-primary px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors'
+          >
             Get Started
-          </button>
+          </Link>
           <button className='border-2 border-foreground text-foreground px-8 py-3 rounded-lg font-semibold hover:bg-foreground hover:text-background transition-colors'>
             Learn More
           </button>
