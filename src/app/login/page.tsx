@@ -48,7 +48,7 @@ export default function LoginPage() {
   });
 
   return (
-    <div className='max-w-2xl mx-auto my-20 space-y-6'>
+    <div className='max-w-2xl mx-auto my-20 space-y-6 px-4'>
       <h1 className='text-2xl font-bold text-center'>Login</h1>
       <form
         id='login-form'
@@ -105,18 +105,18 @@ export default function LoginPage() {
         </FieldGroup>
       </form>
       <Field orientation='vertical'>
-        <Link
-          href='/register'
-          className='text-sm text-blue-500 hover:underline text-end'
-        >
-          Don't have an account? Register here.
-        </Link>
-        <div>
-          <Button type='button' variant='outline' onClick={() => form.reset()}>
-            Reset
-          </Button>
+        <div className='flex justify-end gap-2'>
+          <span className='text-sm text-end'>Don't have an account?</span>
+          <Link
+            href='/register'
+            className='text-sm text-blue-500 hover:underline text-end'
+          >
+            Register here.
+          </Link>
+        </div>
+        <div className='w-full flex justify-end gap-2 flex-col pt-12'>
           <Button type='submit' form='login-form'>
-            Submit
+            Login
           </Button>
         </div>
       </Field>

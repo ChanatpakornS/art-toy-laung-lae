@@ -5,6 +5,7 @@ import '@/styles/globals.css';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,6 +37,7 @@ export default function RootLayout({
           <div className='min-h-screen'>
             <Navbar />
             <main>{children}</main>
+            <Toaster />
           </div>
           <Footer />
         </ThemeProvider>

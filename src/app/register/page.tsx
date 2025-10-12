@@ -13,9 +13,22 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const formSchema = z.object({
   username: z.string(),
+  email: z.email(),
+  telephone: z
+    .string()
+    .regex(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
+  role: z.enum(['USER', 'ADMIN']),
   password: z.string(),
 });
 
@@ -23,12 +36,16 @@ export default function LoginPage() {
   const form = useForm({
     defaultValues: {
       username: '',
+      email: '',
+      telephone: '',
+      role: 'USER',
       password: '',
     },
     validators: {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
+      console.log(value);
       toast('You submitted the following values:', {
         description: (
           <pre className='bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4'>
@@ -71,9 +88,83 @@ export default function LoginPage() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    placeholder='Login button not working on mobile'
-                    autoComplete='off'
+                    placeholder='Enter your Username'
+                    autoComplete='on'
+                    required
                   />
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+          <form.Field name='email'>
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                    placeholder='Enter your Email'
+                    autoComplete='on'
+                    required
+                  />
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+          <form.Field name='telephone'>
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Phone number</FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                    placeholder='Enter your Phone number'
+                    autoComplete='on'
+                    required
+                  />
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+          <form.Field name='role'>
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                  <Select
+                    defaultValue='USER'
+                    onValueChange={field.handleChange}
+                    required
+                  >
+                    <SelectTrigger className='w-[180px]'>
+                      <SelectValue placeholder='Select your role' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value='USER'>USER</SelectItem>
+                        <SelectItem value='ADMIN'>ADMIN</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               );
@@ -93,8 +184,9 @@ export default function LoginPage() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    placeholder='Login button not working on mobile'
+                    placeholder='Enter your Password'
                     autoComplete='off'
+                    required
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
@@ -104,12 +196,11 @@ export default function LoginPage() {
         </FieldGroup>
       </form>
       <Field orientation='horizontal'>
-        <Button type='button' variant='outline' onClick={() => form.reset()}>
-          Reset
-        </Button>
-        <Button type='submit' form='bug-report-form'>
-          Submit
-        </Button>
+        <div className='w-full flex justify-end gap-2 flex-col pt-12'>
+          <Button type='submit' form='login-form' onClick={form.handleSubmit}>
+            Register
+          </Button>
+        </div>
       </Field>
     </div>
   );
