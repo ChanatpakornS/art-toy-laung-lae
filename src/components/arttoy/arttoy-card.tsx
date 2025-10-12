@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Arttoy } from '@/types/arttoy.types';
 import { formatISOToShort } from '@/utils/date';
 
 import { AspectRatio } from '../ui/aspect-ratio';

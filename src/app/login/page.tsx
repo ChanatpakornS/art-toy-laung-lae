@@ -108,7 +108,7 @@ export default function LoginPage() {
       </form>
       <Field orientation='vertical'>
         <div className='flex justify-end gap-2'>
-          <span className='text-sm text-end'>Don't have an account?</span>
+          <span className='text-sm text-end'>Don&apos;t have an account?</span>
           <Link
             href='/register'
             className='text-sm text-blue-500 hover:underline text-end'

@@ -20,9 +20,6 @@ export default function Home() {
           >
             Get Started
           </Link>
-          <button className='border-2 border-foreground text-foreground px-8 py-3 rounded-lg font-semibold hover:bg-foreground hover:text-background transition-colors'>
-            Learn More
-          </button>
         </div>
       </article>
 
