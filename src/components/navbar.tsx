@@ -7,7 +7,6 @@ import { ThemeToggle } from '@/components/theme/theme-toggle';
 
 export function Navbar() {
   const { data: session } = useSession();
-  console.log(session);
 
   return (
     <nav className='flex justify-between items-center p-4'>
