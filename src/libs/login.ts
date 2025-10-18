@@ -1,14 +1,19 @@
-export default async function userLogIn(
-  userEmail: string,
-  userPassword: string,
-) {
-  const response = await fetch('http://localhost:5000/api/v1/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+interface LoginProps {
+  email: string;
+  password: string;
+}
+
+export default async function login({ email, password }: LoginProps) {
+  const response = await fetch(
+    `${process.env.BACKEND_API_URL}/api/v1/auth/login`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
     },
-    body: JSON.stringify({ email: userEmail, password: userPassword }),
-  });
+  );
 
   if (!response.ok) {
     throw new Error('Login failed');

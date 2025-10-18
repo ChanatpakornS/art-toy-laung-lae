@@ -28,7 +28,7 @@ const formSchema = z.object({
   telephone: z
     .string()
     .regex(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
-  role: z.enum(['USER', 'ADMIN']),
+  role: z.enum(['member', 'admin']),
   password: z.string(),
 });
 
@@ -38,27 +38,39 @@ export default function LoginPage() {
       username: '',
       email: '',
       telephone: '',
-      role: 'USER',
+      role: 'member',
       password: '',
     },
     validators: {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      toast('You submitted the following values:', {
-        description: (
-          <pre className='bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4'>
-            <code>{JSON.stringify(value, null, 2)}</code>
-          </pre>
-        ),
-        position: 'bottom-right',
-        classNames: {
-          content: 'flex flex-col gap-2',
-        },
-        style: {
-          '--border-radius': 'calc(var(--radius)  + 4px)',
-        } as React.CSSProperties,
-      });
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: value.username,
+            email: value.email,
+            tel: value.telephone,
+            role: value.role,
+            password: value.password,
+            createdAt: new Date().toISOString().split('T')[0],
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Registration failed');
+        }
+
+        toast.success('Registration successful!');
+        window.location.href = '/login';
+      } catch (error) {
+        toast.error((error as Error).message);
+      }
     },
   });
 
@@ -150,7 +162,7 @@ export default function LoginPage() {
                 <Field data-invalid={isInvalid}>
                   <FieldLabel htmlFor={field.name}>Role</FieldLabel>
                   <Select
-                    defaultValue='USER'
+                    defaultValue='member'
                     onValueChange={field.handleChange}
                     required
                   >
@@ -159,9 +171,9 @@ export default function LoginPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value='USER'>USER</SelectItem>
-                        <SelectItem value='ADMIN'>ADMIN</SelectItem>
-                      </SelectGroup>
+                        <SelectItem value='member'>Member</SelectItem>
+                        <SelectItem value='admin'>Admin</SelectItem>
+                      </SelectGroup>{' '}
                     </SelectContent>
                   </Select>
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -196,7 +208,12 @@ export default function LoginPage() {
       </form>
       <Field orientation='horizontal'>
         <div className='w-full flex justify-end gap-2 flex-col pt-12'>
-          <Button type='submit' form='login-form' onClick={form.handleSubmit}>
+          <Button
+            className='w-full hover:cursor-pointer'
+            type='submit'
+            form='login-form'
+            onClick={form.handleSubmit}
+          >
             Register
           </Button>
         </div>

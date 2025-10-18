@@ -181,6 +181,15 @@ export default [
     },
   },
 
+  // Type declaration files
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'unused-imports/no-unused-imports': 'off',
+    },
+  },
+
   // Config files
   {
     files: ['**/*.config.{js,ts}', '**/next.config.{js,ts}'],
