@@ -4,10 +4,9 @@
   - [x] รองรับผู้ใช้ 2 role ได้แก่ admin และ member
   - [x] user สามารถลงทะเบียน โดยระบุ name, email, tel, role, และ password
     > Registration page มีให้ตามข้อมูลที่ต้องการข้างต้น
-  - [ ] หลังการลงทะเบียน user สามารถ log in เข้าระบบด้วย email และ password โดยระบบออก JWT token เป็น user credential หลังการ log in และ user สามารถ log out ได้
+  - [x] หลังการลงทะเบียน user สามารถ log in เข้าระบบด้วย email และ password โดยระบบออก JWT token เป็น user credential หลังการ log in และ user สามารถ log out ได้
 
-  >[!Note]
-  >API มีการทำ access control และ protected route ด้วย middleware
+  - [ ] API มีการทำ access control และ protected route ด้วย middleware
 
 ### Art Toy Management
   - [x] User ทุกคนสามารถ view ข้อมูล art toy ได้
