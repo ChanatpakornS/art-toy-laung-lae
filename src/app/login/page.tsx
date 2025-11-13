@@ -2,6 +2,7 @@
 
 import { useForm } from '@tanstack/react-form';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import * as React from 'react';
 import { toast } from 'sonner';
 import * as z from 'zod';
@@ -16,34 +17,33 @@ import {
 import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
-  username: z.string(),
+  userEmail: z.string(),
   password: z.string(),
 });
 
 export default function LoginPage() {
   const form = useForm({
     defaultValues: {
-      username: '',
+      userEmail: '',
       password: '',
     },
     validators: {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      toast('You submitted the following values:', {
-        description: (
-          <pre className='bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4'>
-            <code>{JSON.stringify(value, null, 2)}</code>
-          </pre>
-        ),
-        position: 'bottom-right',
-        classNames: {
-          content: 'flex flex-col gap-2',
-        },
-        style: {
-          '--border-radius': 'calc(var(--radius)  + 4px)',
-        } as React.CSSProperties,
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: value.userEmail,
+        password: value.password,
       });
+
+      if (result?.error) {
+        toast.error(result.error);
+      }
+
+      if (result?.ok) {
+        window.location.href = '/';
+      }
     },
   });
 
@@ -58,13 +58,13 @@ export default function LoginPage() {
         }}
       >
         <FieldGroup>
-          <form.Field name='username'>
+          <form.Field name='userEmail'>
             {(field) => {
               const isInvalid =
                 field.state.meta.isTouched && !field.state.meta.isValid;
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Username</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Email</FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -72,7 +72,7 @@ export default function LoginPage() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    placeholder='Enter your Username'
+                    placeholder='Enter your email'
                     autoComplete='on'
                     required
                   />
@@ -116,8 +116,12 @@ export default function LoginPage() {
             Register here.
           </Link>
         </div>
-        <div className='w-full flex justify-end gap-2 flex-col pt-12'>
-          <Button type='submit' form='login-form'>
+        <div className='w-full flex justify-end gap-2 flex-col pt-12 hover:cursor-auto'>
+          <Button
+            className='w-full hover:cursor-pointer'
+            type='submit'
+            form='login-form'
+          >
             Login
           </Button>
         </div>
