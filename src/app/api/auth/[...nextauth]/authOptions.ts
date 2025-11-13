@@ -17,14 +17,25 @@ export const authOptions: AuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = await login({
+        const response = await login({
           email: credentials?.email || '',
           password: credentials?.password || '',
         });
 
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
+        if (response) {
+          // Return user data in the format NextAuth expects
+          // iat, exp, jti will be added by NextAuth JWT
+          return {
+            _id: response._id,
+            name: response.name,
+            email: response.email,
+            token: response.token,
+            success: response.success,
+            // These will be added by NextAuth
+            iat: 0,
+            exp: 0,
+            jti: '',
+          } as any;
         } else {
           return null;
         }
