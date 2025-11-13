@@ -109,13 +109,13 @@ export default function AdminArttoyManagementPage() {
 
   const handleUpdate = (data: ArtToyFormData) => {
     if (editingArtToy) {
-      updateMutation.mutate({ id: editingArtToy.id, data });
+      updateMutation.mutate({ id: editingArtToy._id, data });
     }
   };
 
   const handleDelete = () => {
     if (deletingArtToy) {
-      deleteMutation.mutate(deletingArtToy.id);
+      deleteMutation.mutate(deletingArtToy._id);
     }
   };
 
@@ -178,7 +178,7 @@ export default function AdminArttoyManagementPage() {
         </TableHeader>
         <TableBody>
           {artToys.map((artToy) => (
-            <TableRow key={artToy.id}>
+            <TableRow key={artToy._id}>
               <TableCell className='font-medium'>{artToy.sku}</TableCell>
               <TableCell>{artToy.name}</TableCell>
               <TableCell>{formatISOToShort(artToy.arrivalDate)}</TableCell>
