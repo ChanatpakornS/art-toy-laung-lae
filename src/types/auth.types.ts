@@ -39,3 +39,9 @@ export interface User {
   role: 'admin' | 'member';
   createdAt: string;
 }
+
+// Get Me types
+export interface GetMeResponse {
+  success: boolean;
+  data: User;
+}
