@@ -8,7 +8,7 @@
 - [x] หลังการลงทะเบียน user สามารถ log in เข้าระบบด้วย email และ password
       โดยระบบออก JWT token เป็น user credential หลังการ log in และ user สามารถ
       log out ได้
-- [ ] API มีการทำ access control และ protected route ด้วย middleware
+- [x] API มีการทำ access control และ protected route ด้วย middleware
 
 ### Art Toy Management
 
