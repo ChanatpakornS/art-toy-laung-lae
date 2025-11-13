@@ -57,6 +57,7 @@ export default function AdminArttoyManagementPage() {
     data: artToysData,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ['arttoys'],
     queryFn: getArtToys,
@@ -137,11 +138,7 @@ export default function AdminArttoyManagementPage() {
             Error loading art toys
           </div>
           <div className='text-sm text-muted-foreground'>{error.message}</div>
-          <Button
-            onClick={() => window.location.reload()}
-            variant='outline'
-            size='sm'
-          >
+          <Button onClick={() => refetch()} variant='outline' size='sm'>
             Try Again
           </Button>
         </div>
