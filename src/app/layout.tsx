@@ -7,6 +7,7 @@ import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import NextAuthProvider from '@/providers/NextAuthProvider';
+import ReactQueryProvider from '@/providers/ReactQueryProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -35,14 +36,16 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <NextAuthProvider>
-            <div className='min-h-screen'>
-              <Navbar />
-              <main>{children}</main>
-              <Toaster />
-            </div>
-            <Footer />
-          </NextAuthProvider>
+          <ReactQueryProvider>
+            <NextAuthProvider>
+              <div className='min-h-screen'>
+                <Navbar />
+                <main>{children}</main>
+                <Toaster />
+              </div>
+              <Footer />
+            </NextAuthProvider>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

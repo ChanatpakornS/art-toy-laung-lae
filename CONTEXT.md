@@ -227,7 +227,8 @@ interface Session {
 
 ### Backend API
 
-- **Base URL**: Configured via `BACKEND_API_URL` environment variable
+- **Base URL**: Configured via `NEXT_PUBLIC_BACKEND_API_URL` environment
+  variable
 - **Endpoints**:
   - `POST /api/v1/auth/register` - User registration
   - `POST /api/v1/auth/login` - User login
@@ -250,7 +251,7 @@ interface Session {
 ### Required Variables
 
 ```env
-BACKEND_API_URL=          # Backend API base URL (e.g., http://localhost:5000)
+NEXT_PUBLIC_BACKEND_API_URL=          # Backend API base URL (e.g., http://localhost:5000)
 NEXT_PUBLIC_API_URL=      # Public API URL for client-side (optional)
 NEXTAUTH_URL=             # NextAuth callback URL
 NEXTAUTH_SECRET=          # NextAuth encryption secret

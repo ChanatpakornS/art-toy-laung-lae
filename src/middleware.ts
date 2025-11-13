@@ -15,7 +15,7 @@ export default withAuth(
       try {
         // Fetch user information from the backend to get the role
         const response = await fetch(
-          `${process.env.BACKEND_API_URL}/api/v1/auth/me`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token.token}`,
