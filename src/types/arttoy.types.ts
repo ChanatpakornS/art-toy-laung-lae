@@ -1,5 +1,5 @@
 export interface Arttoy {
-  id: string;
+  _id: string;
   sku: string;
   name: string;
   description: string;
