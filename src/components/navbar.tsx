@@ -38,6 +38,14 @@ export function Navbar() {
         >
           Arttoys
         </Link>
+        {session && (
+          <Link
+            href='/myorder'
+            className='text-foreground hover:text-muted-foreground transition-colors'
+          >
+            My Orders
+          </Link>
+        )}
         <Link
           href='/about'
           className='text-foreground hover:text-muted-foreground transition-colors'
