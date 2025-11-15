@@ -23,8 +23,6 @@ export const authOptions: AuthOptions = {
         });
 
         if (response) {
-          // Return user data in the format NextAuth expects
-          // iat, exp, jti will be added by NextAuth JWT
           return {
             _id: response._id,
             name: response.name,
