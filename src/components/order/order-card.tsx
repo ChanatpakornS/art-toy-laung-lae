@@ -26,14 +26,16 @@ import { Label } from '../ui/label';
 interface OrderCardProps {
   order: Order;
   onUpdate: () => void;
+  showUser?: boolean;
 }
 
-export function OrderCard({ order, onUpdate }: OrderCardProps) {
+export function OrderCard({ order, onUpdate, showUser }: OrderCardProps) {
   const [amount, setAmount] = useState(order.orderAmount);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const artToy = order.artToy as OrderArtToy;
+  const orderUser = order.user as { name?: string; email?: string } | string;
   const hasChanges = amount !== order.orderAmount;
 
   const handleIncrement = () => {
@@ -94,6 +96,16 @@ export function OrderCard({ order, onUpdate }: OrderCardProps) {
           <div>
             <h3 className='text-lg font-semibold'>{artToy.name}</h3>
             <p className='text-sm text-muted-foreground'>SKU: {artToy.sku}</p>
+            {showUser && (
+              <p className='text-sm text-muted-foreground mt-1'>
+                Ordered by:{' '}
+                <span className='font-medium'>
+                  {typeof orderUser === 'string'
+                    ? orderUser
+                    : `${orderUser?.name || 'Unknown'} (${orderUser?.email || ''})`}
+                </span>
+              </p>
+            )}
           </div>
           <AlertDialog>
             <AlertDialogTrigger asChild>

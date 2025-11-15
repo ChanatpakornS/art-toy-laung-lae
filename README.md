@@ -23,7 +23,7 @@
 
 ### Pre-Order Management
 
-- [ ] หลัง login, member user สามารถสร้าง order ขอ pre-order สำหรับ art toy
+- [x] หลัง login, member user สามารถสร้าง order ขอ pre-order สำหรับ art toy
       ใดก็ได้ โดยระบุ id ของ art toy ทั้งนี้ art toy pre-order request
       ที่สร้างใหม่จะได้รับ id สำหรับอ้างอิง โดยสามารถสร้าง art toy pre-order
       ขอจอง art toy ได้รวมสูงสุด 5 ชิ้นต่อ order
@@ -32,7 +32,7 @@
 > โดยใช้ context / redux ในการคุม state management เอาเลย ผ่านจากการส่งจากหน้า
 > `/arttoys/` ผ่านการกดปุ่ม pre-order now
 
-- [ ] member user สามารถสร้าง order ได้เพียง 1 order ต่อ 1 art toy เท่านั้น
-- [ ] หลัง login, member user สามารถ view/edit/delete order ของตนเอง
+- [x] member user สามารถสร้าง order ได้เพียง 1 order ต่อ 1 art toy เท่านั้น
+- [x] หลัง login, member user สามารถ view/edit/delete order ของตนเอง
   > Init หน้า myorder แล้ว
 - [ ] หลัง login, admin user สามารถ view/edit/delete order ของ user ใดก็ได้
