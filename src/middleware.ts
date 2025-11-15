@@ -17,7 +17,7 @@ export default withAuth(
       try {
         // Fetch user information from the backend to get the role
         const userData = await getMe(token.token as string);
-        console.log(userData);
+        // console.log(userData);
 
         // Check if user has admin role
         if (userData.data?.role !== 'admin') {

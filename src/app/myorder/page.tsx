@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Container } from '@/components/container';
@@ -19,7 +19,7 @@ export default function MyOrderPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -33,7 +33,7 @@ export default function MyOrderPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -44,7 +44,17 @@ export default function MyOrderPage() {
     if (status === 'authenticated') {
       fetchOrders();
     }
-  }, [status, router]);
+  }, [status, router, fetchOrders]);
+
+  const handleOrderUpdate = (updatedOrder: Order) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((o) => (o._id === updatedOrder._id ? updatedOrder : o)),
+    );
+  };
+
+  const handleOrderDelete = (orderId: string) => {
+    setOrders((prevOrders) => prevOrders.filter((o) => o._id !== orderId));
+  };
 
   if (status === 'loading' || isLoading) {
     return (
@@ -109,7 +119,12 @@ export default function MyOrderPage() {
 
           <div className='space-y-4'>
             {orders.map((order) => (
-              <OrderCard key={order._id} order={order} onUpdate={fetchOrders} />
+              <OrderCard
+                key={order._id}
+                order={order}
+                onUpdate={handleOrderUpdate}
+                onDelete={handleOrderDelete}
+              />
             ))}
           </div>
         </>

@@ -22,6 +22,40 @@ export async function getArtToys(): Promise<Arttoy[]> {
   return data.data || [];
 }
 
+export async function updateArtToy({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<Arttoy>;
+}): Promise<Arttoy> {
+  const session = await getSession();
+
+  if (!session?.user?.token) {
+    throw new Error('Authentication required');
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/arttoys/${id}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.user.token}`,
+      },
+      body: JSON.stringify(data),
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Failed to update art toy');
+  }
+
+  const resp = await response.json();
+  return resp.data;
+}
+
 export async function submitOrder({
   artToy,
   orderAmount,
@@ -113,10 +147,10 @@ export async function getOrderById(id: string): Promise<Order> {
 
 export async function updateOrder({
   id,
-  orderAmount,
+  data: updateData,
 }: {
   id: string;
-  orderAmount: number;
+  data: Partial<Order>;
 }): Promise<Order> {
   const session = await getSession();
 
@@ -132,7 +166,7 @@ export async function updateOrder({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${session.user.token}`,
       },
-      body: JSON.stringify({ orderAmount }),
+      body: JSON.stringify(updateData),
     },
   );
 
