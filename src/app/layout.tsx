@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import '@/styles/globals.css';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import NextAuthProvider from '@/providers/NextAuthProvider';
-import ReactQueryProvider from '@/providers/ReactQueryProvider';
+import ReduxProvider from '@/providers/ReduxProvider';
+import '@/styles/globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,6 +38,8 @@ export default function RootLayout({
         <ThemeProvider>
           <ReactQueryProvider>
             <NextAuthProvider>
+          <NextAuthProvider>
+            <ReduxProvider>
               <div className='min-h-screen'>
                 <Navbar />
                 <main>{children}</main>
@@ -46,6 +48,8 @@ export default function RootLayout({
               <Footer />
             </NextAuthProvider>
           </ReactQueryProvider>
+            </ReduxProvider>
+          </NextAuthProvider>
         </ThemeProvider>
       </body>
     </html>

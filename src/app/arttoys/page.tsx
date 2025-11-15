@@ -1,17 +1,16 @@
 import { ArtToyCard } from '@/components/arttoy/arttoy-card';
 import { Container } from '@/components/container';
-import { getArtToys } from '@/libs/arttoy';
-import type { Arttoy } from '@/types/arttoy.types';
+import { getArtToys } from '@/libs/arttoys';
+import { Arttoy } from '@/types/arttoy.types';
 
 export default async function ArtToysPage() {
   let artToys: Arttoy[] = [];
   let error: string | null = null;
 
   try {
-    const response = await getArtToys();
-    artToys = response.data || [];
-  } catch (err) {
-    error = err instanceof Error ? err.message : 'Failed to load art toys';
+    artToys = await getArtToys();
+  } catch (e) {
+    error = e instanceof Error ? e.message : 'Failed to load art toys';
   }
 
   return (
@@ -21,17 +20,20 @@ export default async function ArtToysPage() {
         <p>Check out our collection of unique art toys!</p>
       </div>
       <section>
-        {error && (
-          <div className='text-red-500 p-4 rounded-md bg-red-50 mb-4'>
-            {error}
+        {error ? (
+          <div className='text-center py-12'>
+            <p className='text-destructive'>{error}</p>
+            <p className='text-muted-foreground mt-2'>
+              Please try again later or contact support.
+            </p>
           </div>
-        )}
-        {artToys.length === 0 && !error && (
-          <div className='text-gray-500 text-center py-8'>
-            No art toys available at the moment.
+        ) : artToys.length === 0 ? (
+          <div className='text-center py-12'>
+            <p className='text-muted-foreground'>
+              No art toys available at the moment.
+            </p>
           </div>
-        )}
-        {artToys.length > 0 && (
+        ) : (
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
             {artToys.map((artToy) => (
               <ArtToyCard key={artToy._id} {...artToy} />

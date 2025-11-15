@@ -8,7 +8,7 @@ export default withAuth(
     const token = req.nextauth.token;
 
     // Check if the user is trying to access admin routes
-    if (req.nextUrl.pathname.startsWith('/arttoy-management')) {
+    if (req.nextUrl.pathname.startsWith('/admin')) {
       // Double-check token exists (should always be true due to authorized callback)
       if (!token) {
         return NextResponse.redirect(new URL('/login', req.url));
@@ -42,5 +42,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ['/arttoy-management/:path*'],
+  matcher: ['/admin/:path*'],
 };
