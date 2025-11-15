@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { withAuth } from 'next-auth/middleware';
 
+import getMe from '@/libs/getMe';
+
 export default withAuth(
   async function middleware(req) {
     const token = req.nextauth.token;
@@ -14,20 +16,8 @@ export default withAuth(
 
       try {
         // Fetch user information from the backend to get the role
-        const response = await fetch(
-          `${process.env.BACKEND_API_URL}/api/v1/auth/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token.token}`,
-            },
-          },
-        );
-
-        if (!response.ok) {
-          return NextResponse.redirect(new URL('/login', req.url));
-        }
-
-        const userData = await response.json();
+        const userData = await getMe(token.token as string);
+        console.log(userData);
 
         // Check if user has admin role
         if (userData.data?.role !== 'admin') {

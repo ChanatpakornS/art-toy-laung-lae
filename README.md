@@ -13,11 +13,13 @@
 ### Art Toy Management
 
 - [x] User ทุกคนสามารถ view ข้อมูล art toy ได้
-  > Dialog จะแสดงข้อมุล arttoy
-- [ ] หลังการ login, admin user สามารถ add/update/delete/view ข้อมูล art toy โดย
+  > Dialog จะแสดงข้อมูล arttoy
+- [x] หลังการ login, admin user สามารถ add/update/delete/view ข้อมูล art toy โดย
       art toy ที่สร้างใหม่จะได้รับ id สำหรับอ้างอิงในการ update/delete
       ตลอดจนการจัดการการ pre-order ที่เกี่ยวข้องกับ art toy
-- [ ] ในการสร้าง art toy นั้น วัน arrival date ต้องไม่ใช่วันก่อนหน้าวันปัจจุบัน
+  > Implemented in `/arttoy-management` with full CRUD operations
+- [x] ในการสร้าง art toy นั้น วัน arrival date ต้องไม่ใช่วันก่อนหน้าวันปัจจุบัน
+  > Form validation using Zod ensures arrival date >= today
 
 ### Pre-Order Management
 

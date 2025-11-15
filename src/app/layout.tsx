@@ -6,6 +6,7 @@ import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import NextAuthProvider from '@/providers/NextAuthProvider';
+import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import ReduxProvider from '@/providers/ReduxProvider';
 import '@/styles/globals.css';
 
@@ -36,16 +37,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <NextAuthProvider>
-            <ReduxProvider>
-              <div className='min-h-screen'>
-                <Navbar />
-                <main>{children}</main>
-                <Toaster />
-              </div>
-              <Footer />
-            </ReduxProvider>
-          </NextAuthProvider>
+          <ReactQueryProvider>
+            <NextAuthProvider>
+              <ReduxProvider>
+                <div className='min-h-screen'>
+                  <Navbar />
+                  <main>{children}</main>
+                  <Toaster />
+                </div>
+                <Footer />
+              </ReduxProvider>
+            </NextAuthProvider>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,11 +1,4 @@
-interface RegisterProps {
-  name: string;
-  email: string;
-  tel: string;
-  role: string;
-  password: string;
-  createdAt: string;
-}
+import type { RegisterRequest, RegisterResponse } from '@/types/auth.types';
 
 export default async function register({
   name,
@@ -14,7 +7,7 @@ export default async function register({
   role,
   password,
   createdAt,
-}: RegisterProps) {
+}: RegisterRequest): Promise<RegisterResponse> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/auth/register`,
     {
