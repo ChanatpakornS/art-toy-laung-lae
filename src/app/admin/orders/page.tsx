@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Container } from '@/components/container';
@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getOrders } from '@/libs/arttoys';
 import getMe from '@/libs/getMe';
-import { Order } from '@/types/arttoy.types';
+import { Order, OrderUser } from '@/types/arttoy.types';
 
 export default function AdminOrdersPage() {
   const { data: _session, status } = useSession();
@@ -20,13 +20,10 @@ export default function AdminOrdersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
-
-      // getOrders will use the current session token to fetch orders from backend
-      // Backend should return all orders for admin users
       const data = await getOrders();
       setOrders(data);
     } catch (err) {
@@ -37,7 +34,7 @@ export default function AdminOrdersPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const init = async () => {
@@ -47,13 +44,8 @@ export default function AdminOrdersPage() {
       }
 
       if (status === 'authenticated') {
-        // verify role
         try {
-          // session token is available at _session?.user?.token
-          // If session not present, fetchOrders will fail anyway
-          // but we proactively check role to restrict access
-          // @ts-ignore - session shape from next-auth
-          const token = (_session as any)?.user?.token as string | undefined;
+          const token = _session?.user?.token;
           if (!token) {
             router.push('/');
             return;
@@ -61,7 +53,6 @@ export default function AdminOrdersPage() {
 
           const me = await getMe(token);
           if (!me?.data || me.data.role !== 'admin') {
-            // Not an admin
             router.push('/');
             return;
           }
@@ -77,7 +68,17 @@ export default function AdminOrdersPage() {
     };
 
     init();
-  }, [status, router, _session]);
+  }, [status, router, _session, fetchOrders]);
+
+  const handleOrderUpdate = (updatedOrder: Order) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((o) => (o._id === updatedOrder._id ? updatedOrder : o)),
+    );
+  };
+
+  const handleOrderDelete = (orderId: string) => {
+    setOrders((prevOrders) => prevOrders.filter((o) => o._id !== orderId));
+  };
 
   if (status === 'loading' || isLoading) {
     return (
@@ -99,6 +100,19 @@ export default function AdminOrdersPage() {
     return null;
   }
 
+  const groupedOrders = orders.reduce((acc: Record<string, Order[]>, o) => {
+    const userObj = typeof o.user === 'string' ? null : (o.user as OrderUser);
+    let key = o.user as string;
+    if (userObj) {
+      key = userObj._id || userObj.email || userObj.name;
+    }
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(o);
+    return acc;
+  }, {});
+
   return (
     <Container>
       <div className='mb-6'>
@@ -116,25 +130,53 @@ export default function AdminOrdersPage() {
       ) : orders.length === 0 ? (
         <div className='text-center py-12 bg-muted/50 rounded-lg'>
           <h2 className='text-xl font-semibold mb-2'>No Orders</h2>
-          <p className='text-muted-foreground mb-4'>No orders found.</p>
+          <p className='text-muted-foreground mb-4'>
+            No new orders at this time.
+          </p>
         </div>
       ) : (
-        <div className='space-y-4'>
-          {orders.map((order) => (
-            <div key={order._id}>
-              <div className='mb-2'>
-                <p className='text-sm text-muted-foreground'>
-                  Ordered by:{' '}
-                  <span className='font-semibold'>
-                    {typeof order.user === 'string'
-                      ? order.user
-                      : `${order.user.name} (${order.user.email})`}
-                  </span>
-                </p>
+        <div className='space-y-6'>
+          {Object.entries(groupedOrders).map(([userKey, userOrders]) => {
+            if (userOrders.length === 0) {
+              return null;
+            }
+            const first = userOrders[0];
+            const firstUser =
+              typeof first.user === 'string' ? null : (first.user as OrderUser);
+            const userLabel = firstUser
+              ? `${firstUser.name} (${firstUser.email})`
+              : (first.user as string);
+            return (
+              <div key={userKey} className='space-y-3'>
+                <div className='p-4 bg-muted/50 rounded-md'>
+                  <div className='flex items-center justify-between'>
+                    <div>
+                      <p className='text-sm text-muted-foreground'>User</p>
+                      <p className='font-semibold'>{userLabel}</p>
+                    </div>
+                    <div className='text-right'>
+                      <p className='text-sm text-muted-foreground'>
+                        Total Orders
+                      </p>
+                      <p className='font-bold'>{userOrders.length}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className='space-y-4'>
+                  {userOrders.map((order) => (
+                    <OrderCard
+                      key={order._id}
+                      order={order}
+                      onUpdate={handleOrderUpdate}
+                      onDelete={handleOrderDelete}
+                      isAdmin
+                      showUser
+                    />
+                  ))}
+                </div>
               </div>
-              <OrderCard order={order} onUpdate={fetchOrders} />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </Container>

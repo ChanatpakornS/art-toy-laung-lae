@@ -34,7 +34,7 @@ export function formatISOToShort(
     return midnightUtc.format('D MMM YYYY HH:mm');
   }
 
-  const d = (dayjs as any).tz ? (dayjs as any).tz(iso, timeZone) : dayjs(iso);
+  const d = dayjs.tz ? dayjs.tz(iso, timeZone) : dayjs(iso);
   const midnight = d.startOf('day');
   return midnight.format('D MMM YYYY HH:mm');
 }
