@@ -9,8 +9,8 @@ import { Container } from '@/components/container';
 import { OrderCard } from '@/components/order/order-card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getOrders } from '@/libs/arttoys';
 import getMe from '@/libs/getMe';
+import { getOrders } from '@/libs/order';
 import { Order, OrderUser } from '@/types/arttoy.types';
 
 export default function AdminOrdersPage() {

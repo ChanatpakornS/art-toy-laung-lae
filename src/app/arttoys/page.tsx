@@ -1,6 +1,6 @@
 import { ArtToyCard } from '@/components/arttoy/arttoy-card';
 import { Container } from '@/components/container';
-import { getArtToys } from '@/libs/arttoys';
+import { getArtToys } from '@/libs/arttoy';
 import { Arttoy } from '@/types/arttoy.types';
 
 export default async function ArtToysPage() {
@@ -8,7 +8,8 @@ export default async function ArtToysPage() {
   let error: string | null = null;
 
   try {
-    artToys = await getArtToys();
+    const response = await getArtToys();
+    artToys = response.data || [];
   } catch (e) {
     error = e instanceof Error ? e.message : 'Failed to load art toys';
   }

@@ -71,9 +71,9 @@ The `src/` directory is organized as follows:
 
 ## 6. State Management
 
-- **Server State**: Use `@tanstack/react-query` for fetching, caching, and
-  managing server state. Use the provided hooks `useApiQuery` and
-  `useApiMutation` from `libs/api-client.ts`.
+- **Server State**: API-specific functions in `src/libs/` use the native `fetch`
+  API to interact with the backend. While `@tanstack/react-query` is installed,
+  its usage is not yet standardized in the API-calling functions.
 - **Form State**: Use `@tanstack/react-form` for managing form logic and
   validation. Define validation schemas using `zod`.
 - **UI State**: Use React hooks (`useState`, `useContext`) for local and shared

@@ -90,7 +90,6 @@ art-toy-laung-lae/
 │   │   └── container.tsx # Layout container
 │   ├── hooks/            # Custom React hooks
 │   ├── libs/             # Library utilities
-│   │   ├── api-client.ts # API client with React Query
 │   │   ├── login.ts      # Login API handler
 │   │   ├── register.ts   # Registration API handler
 │   │   └── utils.ts      # General utilities
@@ -129,10 +128,12 @@ art-toy-laung-lae/
 
 ### Data Flow
 
-1. **API Client** (`libs/api-client.ts`) wraps fetch with TanStack Query
-2. **Generic Hooks**: `useApiQuery`, `useApiMutation` for CRUD operations
-3. **Type Safety**: TypeScript interfaces define data structures
-4. **Server-side validation**: Zod schemas validate forms
+1. **API Functions**: Functions in `src/libs/` use the native `fetch` API to
+   communicate with the backend.
+2. **Direct Usage**: These functions are called directly from components or
+   server actions.
+3. **Type Safety**: TypeScript interfaces define data structures.
+4. **Server-side validation**: Zod schemas validate forms.
 
 ### Component Architecture
 
@@ -240,9 +241,10 @@ interface Session {
 
 ### Frontend API Client
 
-- Generic `apiFetch<T>()` function in `libs/api-client.ts`
-- React Query hooks: `useApiQuery`, `useApiMutation`
-- Automatic error handling and loading states
+- API-specific functions are defined in `src/libs/` (e.g., `src/libs/arttoy.ts`,
+  `src/libs/login.ts`).
+- These functions use the native `fetch` API to make requests.
+- Error handling is done within each function, typically by throwing an `Error`.
 
 ---
 
