@@ -2,11 +2,32 @@
 
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 import { ThemeToggle } from '@/components/theme/theme-toggle';
+import getMe from '@/libs/getMe';
+import type { User } from '@/types/auth.types';
 
 export function Navbar() {
   const { data: session } = useSession();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (session) {
+      const fetchUser = async () => {
+        try {
+          const userData = await getMe(session.user.token);
+          setUser(userData.data);
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to fetch user:', error);
+          signOut();
+        }
+      };
+
+      fetchUser();
+    }
+  }, [session]);
 
   return (
     <nav className='flex justify-between items-center p-4'>
@@ -32,19 +53,38 @@ export function Navbar() {
         >
           Home
         </Link>
-        <Link
-          href='/arttoys'
-          className='text-foreground hover:text-muted-foreground transition-colors'
-        >
-          Arttoys
-        </Link>
-        {session && (
-          <Link
-            href='/myorder'
-            className='text-foreground hover:text-muted-foreground transition-colors'
-          >
-            My Orders
-          </Link>
+        {user?.role === 'admin' ? (
+          <>
+            <Link
+              href='/admin/arttoy-management'
+              className='text-foreground hover:text-muted-foreground transition-colors'
+            >
+              Arttoy Management
+            </Link>
+            <Link
+              href='/admin/orders'
+              className='text-foreground hover:text-muted-foreground transition-colors'
+            >
+              Orders
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              href='/arttoys'
+              className='text-foreground hover:text-muted-foreground transition-colors'
+            >
+              Arttoys
+            </Link>
+            {session && (
+              <Link
+                href='/myorder'
+                className='text-foreground hover:text-muted-foreground transition-colors'
+              >
+                My Orders
+              </Link>
+            )}
+          </>
         )}
         <Link
           href='/about'
