@@ -4,7 +4,7 @@ import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { deleteOrder, updateOrder } from '@/libs/arttoys';
+import { deleteOrder, updateOrder } from '@/libs/order';
 import { Order, OrderArtToy, OrderUser } from '@/types/arttoy.types';
 import { formatISOToShort } from '@/utils/date';
 

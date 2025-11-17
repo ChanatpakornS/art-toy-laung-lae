@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { submitOrder } from '@/libs/arttoys';
+import { submitOrder } from '@/libs/order';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addToOrder } from '@/store/slices/orderSlice';
 import { Arttoy } from '@/types/arttoy.types';

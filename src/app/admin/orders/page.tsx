@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -9,13 +7,10 @@ import { Container } from '@/components/container';
 import { OrderCard } from '@/components/order/order-card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getOrders } from '@/libs/arttoys';
-import getMe from '@/libs/getMe';
+import { getOrders } from '@/libs/order';
 import { Order, OrderUser } from '@/types/arttoy.types';
 
 export default function AdminOrdersPage() {
-  const { data: _session, status } = useSession();
-  const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,38 +32,8 @@ export default function AdminOrdersPage() {
   }, []);
 
   useEffect(() => {
-    const init = async () => {
-      if (status === 'unauthenticated') {
-        router.push('/login');
-        return;
-      }
-
-      if (status === 'authenticated') {
-        try {
-          const token = _session?.user?.token;
-          if (!token) {
-            router.push('/');
-            return;
-          }
-
-          const me = await getMe(token);
-          if (!me?.data || me.data.role !== 'admin') {
-            router.push('/');
-            return;
-          }
-
-          await fetchOrders();
-        } catch (err) {
-          const errorMessage =
-            err instanceof Error ? err.message : 'Failed to validate user';
-          setError(errorMessage);
-          setIsLoading(false);
-        }
-      }
-    };
-
-    init();
-  }, [status, router, _session, fetchOrders]);
+    fetchOrders();
+  }, [fetchOrders]);
 
   const handleOrderUpdate = (updatedOrder: Order) => {
     setOrders((prevOrders) =>
@@ -80,7 +45,7 @@ export default function AdminOrdersPage() {
     setOrders((prevOrders) => prevOrders.filter((o) => o._id !== orderId));
   };
 
-  if (status === 'loading' || isLoading) {
+  if (isLoading) {
     return (
       <Container>
         <div className='mb-6'>
@@ -94,10 +59,6 @@ export default function AdminOrdersPage() {
         </div>
       </Container>
     );
-  }
-
-  if (status === 'unauthenticated') {
-    return null;
   }
 
   const groupedOrders = orders.reduce((acc: Record<string, Order[]>, o) => {

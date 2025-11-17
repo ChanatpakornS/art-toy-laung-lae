@@ -1,60 +1,6 @@
 import { getSession } from 'next-auth/react';
 
-import { Arttoy, Order } from '@/types/arttoy.types';
-
-export async function getArtToys(): Promise<Arttoy[]> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/arttoys`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch art toys');
-  }
-
-  const data = await response.json();
-  return data.data || [];
-}
-
-export async function updateArtToy({
-  id,
-  data,
-}: {
-  id: string;
-  data: Partial<Arttoy>;
-}): Promise<Arttoy> {
-  const session = await getSession();
-
-  if (!session?.user?.token) {
-    throw new Error('Authentication required');
-  }
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/arttoys/${id}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session.user.token}`,
-      },
-      body: JSON.stringify(data),
-    },
-  );
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Failed to update art toy');
-  }
-
-  const resp = await response.json();
-  return resp.data;
-}
+import { Order } from '@/types/arttoy.types';
 
 export async function submitOrder({
   artToy,
