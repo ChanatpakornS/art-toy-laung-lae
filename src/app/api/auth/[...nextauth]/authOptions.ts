@@ -2,6 +2,7 @@ import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import login from '@/libs/login';
+import { AuthorizedUser } from '@/types/auth.types';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -24,6 +25,7 @@ export const authOptions: AuthOptions = {
 
         if (response) {
           return {
+            id: response._id, // Map _id to id for NextAuth
             _id: response._id,
             name: response.name,
             email: response.email,
@@ -33,7 +35,7 @@ export const authOptions: AuthOptions = {
             iat: 0,
             exp: 0,
             jti: '',
-          } as any;
+          } as AuthorizedUser;
         } else {
           return null;
         }

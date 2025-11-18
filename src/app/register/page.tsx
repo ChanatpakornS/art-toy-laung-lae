@@ -75,7 +75,7 @@ export default function LoginPage() {
   });
 
   return (
-    <div className='max-w-2xl mx-auto my-20 space-y-6'>
+    <div className='max-w-2xl mx-auto my-20 space-y-6 px-4'>
       <h1 className='text-2xl font-bold text-center'>Registration</h1>
       <form
         id='registration-form'

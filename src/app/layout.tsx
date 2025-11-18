@@ -42,7 +42,7 @@ export default function RootLayout({
               <ReduxProvider>
                 <div className='min-h-screen'>
                   <Navbar />
-                  <main>{children}</main>
+                  <main className='pt-16'>{children}</main>
                   <Toaster />
                 </div>
                 <Footer />
