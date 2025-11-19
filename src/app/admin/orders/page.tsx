@@ -130,7 +130,6 @@ export default function AdminOrdersPage() {
                       order={order}
                       onUpdate={handleOrderUpdate}
                       onDelete={handleOrderDelete}
-                      isAdmin
                       showUser
                     />
                   ))}

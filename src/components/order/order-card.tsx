@@ -28,7 +28,6 @@ interface OrderCardProps {
   onUpdate: (updatedOrder: Order) => void;
   onDelete: (orderId: string) => void;
   showUser?: boolean;
-  isAdmin?: boolean;
 }
 
 export function OrderCard({
@@ -36,7 +35,6 @@ export function OrderCard({
   onUpdate,
   onDelete,
   showUser,
-  isAdmin,
 }: OrderCardProps) {
   const [amount, setAmount] = useState<number>(order.orderAmount);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -125,7 +123,7 @@ export function OrderCard({
           </div>
 
           <div className='flex items-center gap-2'>
-            {isAdmin && !isEditing && (
+            {!isEditing && (
               <Button
                 variant='outline'
                 size='sm'
