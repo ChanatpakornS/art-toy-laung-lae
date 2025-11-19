@@ -32,12 +32,22 @@ export interface RegisterResponse {
 
 // User type
 export interface User {
+  id: string; // Added for NextAuth compatibility
   _id: string;
   name: string;
   email: string;
   tel?: string;
   role: 'admin' | 'member';
   createdAt: string;
+}
+
+// AuthorizedUser type for NextAuth's authorize function
+export interface AuthorizedUser extends User {
+  token: string;
+  success: boolean;
+  iat: number;
+  exp: number;
+  jti: string;
 }
 
 // Get Me types

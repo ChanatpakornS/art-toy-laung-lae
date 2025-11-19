@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
+import { ArtToyCardMobile } from '@/components/arttoy/arttoy-card-mobile';
 import { ArtToyForm } from '@/components/arttoy/arttoy-form';
 import { Container } from '@/components/container';
 import {
@@ -35,6 +36,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   createArtToy,
   deleteArtToy,
@@ -47,6 +49,7 @@ import { formatISOToShort } from '@/utils/date';
 export default function AdminArttoyManagementPage() {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [editingArtToy, setEditingArtToy] = useState<Arttoy | null>(null);
@@ -158,56 +161,77 @@ export default function AdminArttoyManagementPage() {
         </Button>
       </div>
 
-      <Table>
-        <TableCaption>
-          {artToys.length === 0
-            ? 'No art toys available. Create one to get started.'
-            : `A list of ${artToys.length} art toy${artToys.length > 1 ? 's' : ''}.`}
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>SKU</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Arrival Date</TableHead>
-            <TableHead className='text-right'>Available Quota</TableHead>
-            <TableHead className='text-right'>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {artToys.map((artToy) => (
-            <TableRow key={artToy._id}>
-              <TableCell className='font-medium'>{artToy.sku}</TableCell>
-              <TableCell>{artToy.name}</TableCell>
-              <TableCell>{formatISOToShort(artToy.arrivalDate)}</TableCell>
-              <TableCell className='text-right'>
-                {artToy.availableQuota}
-              </TableCell>
-              <TableCell className='text-right'>
-                <div className='flex justify-end gap-2'>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => setEditingArtToy(artToy)}
-                  >
-                    <Edit className='h-4 w-4' />
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    onClick={() => setDeletingArtToy(artToy)}
-                  >
-                    <Trash2 className='h-4 w-4' />
-                  </Button>
-                </div>
-              </TableCell>
+      {isMobile ? (
+        <div className='space-y-4'>
+          {artToys.length === 0 ? (
+            <div className='text-center py-12 bg-muted/50 rounded-lg'>
+              <p className='text-muted-foreground'>
+                No art toys available. Create one to get started.
+              </p>
+            </div>
+          ) : (
+            artToys.map((artToy) => (
+              <ArtToyCardMobile
+                key={artToy._id}
+                artToy={artToy}
+                onEdit={setEditingArtToy}
+                onDelete={setDeletingArtToy}
+              />
+            ))
+          )}
+        </div>
+      ) : (
+        <Table>
+          <TableCaption>
+            {artToys.length === 0
+              ? 'No art toys available. Create one to get started.'
+              : `A list of ${artToys.length} art toy${artToys.length > 1 ? 's' : ''}.`}
+          </TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>SKU</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Arrival Date</TableHead>
+              <TableHead className='text-right'>Available Quota</TableHead>
+              <TableHead className='text-right'>Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {artToys.map((artToy) => (
+              <TableRow key={artToy._id}>
+                <TableCell className='font-medium'>{artToy.sku}</TableCell>
+                <TableCell>{artToy.name}</TableCell>
+                <TableCell>{formatISOToShort(artToy.arrivalDate)}</TableCell>
+                <TableCell className='text-right'>
+                  {artToy.availableQuota}
+                </TableCell>
+                <TableCell className='text-right'>
+                  <div className='flex justify-end gap-2'>
+                    <Button
+                      variant='outline'
+                      size='icon'
+                      onClick={() => setEditingArtToy(artToy)}
+                    >
+                      <Edit className='h-4 w-4' />
+                    </Button>
+                    <Button
+                      variant='destructive'
+                      size='icon'
+                      onClick={() => setDeletingArtToy(artToy)}
+                    >
+                      <Trash2 className='h-4 w-4' />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
 
       {/* Create Dialog */}
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-        <DialogContent className='max-w-2xl max-h-[90vh] overflow-y-auto'>
+        <DialogContent className='w-full max-w-md md:max-w-2xl max-h-[90vh] overflow-y-auto'>
           <DialogHeader>
             <DialogTitle>Create New Art Toy</DialogTitle>
             <DialogDescription>
@@ -227,7 +251,7 @@ export default function AdminArttoyManagementPage() {
         open={!!editingArtToy}
         onOpenChange={(open) => !open && setEditingArtToy(null)}
       >
-        <DialogContent className='max-w-2xl max-h-[90vh] overflow-y-auto'>
+        <DialogContent className='w-full max-w-md md:max-w-2xl max-h-[90vh] overflow-y-auto'>
           <DialogHeader>
             <DialogTitle>Edit Art Toy</DialogTitle>
             <DialogDescription>

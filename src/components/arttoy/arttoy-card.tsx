@@ -110,11 +110,11 @@ export function ArtToyCard(props: Arttoy) {
           </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className='min-w-2xl'>
+      <DialogContent className='w-full max-w-md md:max-w-2xl max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle className='text-2xl'>{props.name}</DialogTitle>
         </DialogHeader>
-        <div className='grid grid-cols-2 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           <div className='col-span-1'>
             <AspectRatio
               ratio={9 / 16}
