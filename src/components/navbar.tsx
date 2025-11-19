@@ -131,13 +131,15 @@ export function Navbar() {
       {/* Left side - User info */}
       <div className='flex items-center space-x-4'>
         {session && (
-          <div className='flex flex-col'>
-            <span className='font-medium'>{session.user?.name}</span>
-            {session.user?.email && (
-              <span className='text-sm text-muted-foreground'>
-                {session.user.email}
-              </span>
-            )}
+          <div className='flex flex-row gap-2'>
+            <span className='font-medium'>
+              {session.user?.name}{' '}
+              {session.user?.email && (
+                <span className='text-sm text-muted-foreground'>
+                  {session.user.email}
+                </span>
+              )}
+            </span>
           </div>
         )}
       </div>
