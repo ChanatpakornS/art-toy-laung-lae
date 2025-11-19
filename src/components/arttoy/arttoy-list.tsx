@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { ArtToyCard } from '@/components/arttoy/arttoy-card';
@@ -29,7 +29,10 @@ export function ArtToyList() {
     }
   }, []);
 
-  fetchArtToys();
+  useEffect(() => {
+    fetchArtToys();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (status === 'loading' || isLoading) {
     return (
