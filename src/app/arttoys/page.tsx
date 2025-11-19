@@ -1,18 +1,10 @@
-import { ArtToyCard } from '@/components/arttoy/arttoy-card';
+import { ArtToyList } from '@/components/arttoy/arttoy-list';
 import { Container } from '@/components/container';
-import { getArtToys } from '@/libs/arttoy';
 import { Arttoy } from '@/types/arttoy.types';
 
 export default async function ArtToysPage() {
-  let artToys: Arttoy[] = [];
-  let error: string | null = null;
-
-  try {
-    const response = await getArtToys();
-    artToys = response.data || [];
-  } catch (e) {
-    error = e instanceof Error ? e.message : 'Failed to load art toys';
-  }
+  const artToys: Arttoy[] = [];
+  const error: string | null = null;
 
   return (
     <Container>
@@ -35,11 +27,7 @@ export default async function ArtToysPage() {
             </p>
           </div>
         ) : (
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {artToys.map((artToy) => (
-              <ArtToyCard key={artToy._id} {...artToy} />
-            ))}
-          </div>
+          <ArtToyList />
         )}
       </section>
     </Container>
