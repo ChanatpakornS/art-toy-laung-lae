@@ -6,8 +6,10 @@ export default async function getMe(token: string): Promise<GetMeResponse> {
     {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      credentials: 'include',
     },
   );
 
